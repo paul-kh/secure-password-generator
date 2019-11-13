@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<style>
+    body {
+        background-color: #F8F9FA;
+    }
+</style>
+
+<body>
+    <header class="row justify-content-center p-3">
+        <h1>Password Generator</h1>
+    </header>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-12">
+                <!-- Row 1 for headline -->
+                <div class="row">
+                    <div class="col-12">
+                        <h2> Generate a password</h2>
+                    </div>
+                </div>
+                <!-- Row 2 for password display -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="jumbotron">
+                            <h1 class="display-4">Your Password</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Row 3 for buttons-->
+                <div class="row d-flex">
+                    <div class="col-sm-4 text-lef pl-5">
+                        <button type="button" class="btn btn-danger">Generate Password</button>
+                    </div>
+                    <div class="col-sm-4">
+
+                    </div>
+                    <div class="col-sm-4 text-right pr-5">
+                        <button type="button" class="btn btn-secondary">Copy to Clipboard</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // Pseudo Codes
+        //*********************************************************************
+        // Collect user's input by having them confirming:
+        // > Passwor length: must be betwen 8 - 12
+        // > Capital letter
+        // > Special character
+        // > Numberic character 
+        // ------------------------------
+        // Store user's inputs/confirmations
+        // -------------------------------------
+        // Generate password
+        // > create a password array with length of password length
+        // > Select lower case characters randomly from an array of alphabets
+        // > Insert the random lowercase characters from alphabet array into the password array
+        // > Slide the password array at random position with the user's inputs: Capital char, special char, numeric char
+        // > Display password array on the screen
+        // > Copy password to clib board
+
+
+    </script>
+
+</body>
+
+</html>
