@@ -74,6 +74,106 @@
         // > Display password array on the screen
         // > Copy password to clib board
 
+        const specialChars = ["@", "?", "!", "#", "$", "%", "&", "*", "+", "-", ".", ";", "^"];// 13 items
+        const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+        // get user's confirmation
+        //function getUserConfirmation() {
+
+        // validate and return user's input for password length
+        function getUserPwdLen() {
+            let pwdLength = prompt("Choose your password length between 8 and 16 characters:");
+            console.log("Pwd lenght: ", pwdLength);
+
+
+            while (Number.isInteger(parseFloat(pwdLength)) === false) {
+                pwdLength = prompt("Please input your password length in a NUMBER FORMAT between 8-16:");
+                console.log(pwdLength, " ", Number.isInteger(pwdLength));
+                // if user clicks Cancel button, exit the while loop
+                if (pwdLength === null) { break; }
+            }
+            //TO DO: check if user entered password length between 8 and 16
+            return parseInt(pwdLength);
+        }
+
+
+        function randomizeArrayIndex(arrLen) {
+            return Math.floor(Math.random() * arrLen);
+        }
+
+        // create random lower case letters
+        function randomizeLowerCaseArr(arrLen) {
+            let strLowerCasePwd = "";
+            let randomLowerCaseLetters = [];
+            //get random item from lower case letters array
+            for (let i = 0; i < arrLen; i++) {
+                randomLowerCaseLetters[i] = letters[randomizeArrayIndex(25)];
+
+            }
+            return randomLowerCaseLetters;
+        }
+
+        // splice array at random index 
+        // function genSecurePwd (pwdLen, capChar, specialChar, numChar) {
+
+
+        // }
+        function genSecurePwd(pwdLen) {
+            let securePwdArr = randomizeLowerCaseArr(pwdLen);;
+            // get userConfirmation
+            const capCharBool = confirm("Do you want capital characters?");
+            const specialCharBool = confirm("Do you want special character?");
+            const numCharBool = confirm("Do you want numeric characters?");
+            let strSecurePwd = "";
+
+            // check if user confirmed ok for password criteria
+            if (capCharBool === true) {
+                capChar = letters[randomizeArrayIndex(25)].toUpperCase();
+                //splice capital char at random index from 0 to 2
+                securePwdArr.splice(randomizeArrayIndex(3), 1, capChar);
+            }
+            if (specialCharBool === true) {
+                specialChar = specialChars[randomizeArrayIndex(12)];
+                //splice special char at random index from 3 to 5 
+                securePwdArr.splice(randomizeArrayIndex(3) + 3, 1, specialChar);
+            }
+            if (numCharBool === true) {
+                numChar = numbers[randomizeArrayIndex(9)];
+                //splice numeric char at random index from 6 to the array length
+                securePwdArr.splice(6 + randomizeArrayIndex(securePwdArr.length - 6), 1, numChar);
+            }
+
+            for (let i = 0; i < pwdLen; i++){
+                strSecurePwd = strSecurePwd + securePwdArr[i];
+            }
+            return strSecurePwd;
+        }
+
+        
+        console.log(genSecurePwd(getUserPwdLen()));
+
+
+
+
+
+
+
+
+
+        // const boolCapChar = confirm("Do you want capital characters?");
+        // console.log("Capital Characters", boolCapChar);
+        // const boolSpecialChar = confirm("Do you want special characters?");
+        // console.log("Special Character: ", boolSpecialChar);
+        // const boolNumericChar = confirm("Do you want numeric characters?");
+        // console.log("Numeric Characters: ", boolNumericChar);
+        // return pwdLength, boolCapChar, boolNumericChar, boolSpecialChar;
+        //}
+
+
+
+
+
 
     </script>
 
