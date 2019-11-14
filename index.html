@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Password Generator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 </head>
 <link rel="stylesheet" href="assets/css/style.css">
 
@@ -15,32 +16,33 @@
     <header class="row justify-content-center p-3">
         <h1>Password Generator</h1>
     </header>
-    <div class="container">
+    <div class="container p-5 bg-success">
 
         <div class="row">
             <div class="col-12">
                 <!-- Row 1 for headline -->
                 <div class="row">
-                    <div class="col-12">
-                        <h2> Generate a password</h2>
+                    <div class="col-12 pb-3 headline">
+                        <h3> Generate a password</h3>
                     </div>
                 </div>
+
                 <!-- Row 2 for password display -->
                 <div class="row">
-                    <div class="col-12">
-                        <div class="jumbotron text-center">
+                    <div class="col-12 col-sm-12">
+                        <div class="jumbotron text-center display">
                             <input type="text" value="" id="securePwdInput" disabled>
                         </div>
                     </div>
                 </div>
                 <!-- Row 3 for buttons-->
-                <div class="row d-flex">
-                    <div class="col-sm-4 text-lef pl-5">
-                        <button type="button" class="btn btn-danger" onclick="genSecurePwd()">Generate Password</button>
+       
+                <div class="row">
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn-lg btn-danger m-2" style="width: 60%" onclick="genSecurePwd()">Generate Password</button>
                     </div>
-                    <div class="col-sm-4"></div>
-                    <div class="col-sm-4 text-right pr-5">
-                        <button type="button" class="btn btn-secondary" onclick="copyToClipboard()">Copy to
+                    <div class="col-sm-6 text-center">
+                        <button type="button" class="btn-lg btn-secondary m-2" style="width: 60%" onclick="copyToClipboard()">Copy to
                             Clipboard</button>
                     </div>
 
@@ -48,149 +50,7 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Pseudo Codes
-        //*********************************************************************
-        // Collect user's input by having them confirming:
-        // > Passwor length: must be betwen 8 - 12
-        // > Capital letter
-        // > Special character
-        // > Numberic character 
-        // ------------------------------
-        // Store user's inputs/confirmations
-        // -------------------------------------
-        // Generate password
-        // > create a password array with length of password length
-        // > Select lower case characters randomly from an array of alphabets
-        // > Insert the random lowercase characters from alphabet array into the password array
-        // > Slide the password array at random position with the user's inputs: Capital char, special char, numeric char
-        // > Display password array on the screen
-        // > Copy password to clib board
-
-        const specialChars = ["@", "?", "!", "#", "$", "%", "&", "*", "+", "-", ".", ";", "^"];// 13 items
-        const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-        const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-        securePwdInputEl = document.getElementById("securePwdInput");
-
-        // get user's confirmation
-        //function getUserConfirmation() {
-
-        // validate and return user's input for password length
-        function getUserPwdLen() {
-            let pwdLength = prompt("Choose your password length between 8 and 16 characters:");
-            console.log("Pwd lenght: ", pwdLength, Number.isInteger(parseInt(pwdLength)));
-            // if user clicks cancel
-            if (pwdLength === null) { return null }
-
-            while (Number.isInteger(parseInt(pwdLength)) === false) {
-                pwdLength = prompt("Please input your password length in a NUMBER FORMAT between 8-16:");
-                console.log(pwdLength, " ", Number.isInteger(parseInt(pwdLength)));
-                // if user clicks Cancel button, exit the while loop
-                if (pwdLength === null) { break; }
-            }
-            //TO DO: check if user entered password length between 8 and 16
-            return parseInt(pwdLength);
-        }
-
-
-        function randomizeArrayIndex(arrLen) {
-            return Math.floor(Math.random() * arrLen);
-        }
-
-        // create random lower case letters
-        function randomizeLowerCaseArr(arrLen) {
-            let strLowerCasePwd = "";
-            let randomLowerCaseLetters = [];
-            //get random item from lower case letters array
-            for (let i = 0; i < arrLen; i++) {
-                randomLowerCaseLetters[i] = letters[randomizeArrayIndex(25)];
-
-            }
-            return randomLowerCaseLetters;
-        }
-
-        // splice array at random index 
-        // function genSecurePwd (pwdLen, capChar, specialChar, numChar) {
-
-
-        // }
-        function genSecurePwd() {
-
-            const pwdLen = getUserPwdLen();
-            // if user click cancel
-            if (pwdLen === null) {return}
-            let securePwdArr = randomizeLowerCaseArr(pwdLen);;
-
-            // get userConfirmation for password criteria
-            const capCharBool = confirm("Do you want capital characters?");
-            const specialCharBool = confirm("Do you want special character?");
-            const numCharBool = confirm("Do you want numeric characters?");
-            let strSecurePwd = "";
-
-            // check if user confirmed ok for password criteria
-            if (capCharBool === true) {
-                capChar = letters[randomizeArrayIndex(25)].toUpperCase();
-                //splice capital char at random index from 0 to 2
-                securePwdArr.splice(randomizeArrayIndex(3), 1, capChar);
-            }
-            if (specialCharBool === true) {
-                specialChar = specialChars[randomizeArrayIndex(12)];
-                //splice special char at random index from 3 to 5 
-                securePwdArr.splice(3 + randomizeArrayIndex(3), 1, specialChar);
-            }
-            if (numCharBool === true) {
-                numChar = numbers[randomizeArrayIndex(9)];
-                //splice numeric char at random index from 6 to the array length
-                securePwdArr.splice(6 + randomizeArrayIndex(securePwdArr.length - 6), 1, numChar);
-            }
-
-            for (let i = 0; i < pwdLen; i++) {
-                strSecurePwd = strSecurePwd + securePwdArr[i];
-            }
-            securePwdInputEl.value = strSecurePwd;
-        }
-
-        // copy the secure password to clip board
-
-
-        function copyToClipboard() {
-
-            // var copyText = securePwdInputEl;
-            securePwdInputEl.disabled = false;
-            securePwdInputEl.select();
-            securePwdInputEl.setSelectionRange(0, 99999)
-            document.execCommand("copy");
-            securePwdInputEl.disabled = true;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-        // const boolCapChar = confirm("Do you want capital characters?");
-        // console.log("Capital Characters", boolCapChar);
-        // const boolSpecialChar = confirm("Do you want special characters?");
-        // console.log("Special Character: ", boolSpecialChar);
-        // const boolNumericChar = confirm("Do you want numeric characters?");
-        // console.log("Numeric Characters: ", boolNumericChar);
-        // return pwdLength, boolCapChar, boolNumericChar, boolSpecialChar;
-        //}
-
-
-
-
-
-
-    </script>
-
+    <script src="./script.js"></script>
 </body>
 
 </html>

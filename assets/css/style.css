@@ -9,6 +9,13 @@
 }
 body {
     background-color: #F8F9FA;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-
+    font-family: 'Roboto Slab', serif;
+}
+.headline {
+    padding-top: -10px;
+    color: white;
+}
+.display {
+    border: 1px dashed grey;
+    border-radius: 5px;
 }
