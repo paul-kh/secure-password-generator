@@ -9,11 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<style>
-    body {
-        background-color: #F8F9FA;
-    }
-</style>
+<link rel="stylesheet" href="assets/css/style.css">
 
 <body>
     <header class="row justify-content-center p-3">
@@ -32,28 +28,26 @@
                 <!-- Row 2 for password display -->
                 <div class="row">
                     <div class="col-12">
-                        <div class="jumbotron">
-                            <h1 class="display-4">Your Password</h1>
+                        <div class="jumbotron text-center">
+                            <input type="text" value="" id="securePwdInput" disabled>
                         </div>
                     </div>
                 </div>
                 <!-- Row 3 for buttons-->
                 <div class="row d-flex">
                     <div class="col-sm-4 text-lef pl-5">
-                        <button type="button" class="btn btn-danger">Generate Password</button>
+                        <button type="button" class="btn btn-danger" onclick="genSecurePwd()">Generate Password</button>
                     </div>
-                    <div class="col-sm-4">
-
-                    </div>
+                    <div class="col-sm-4"></div>
                     <div class="col-sm-4 text-right pr-5">
-                        <button type="button" class="btn btn-secondary">Copy to Clipboard</button>
+                        <button type="button" class="btn btn-secondary" onclick="copyToClipboard()">Copy to
+                            Clipboard</button>
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-
 
     <script>
         // Pseudo Codes
@@ -77,6 +71,7 @@
         const specialChars = ["@", "?", "!", "#", "$", "%", "&", "*", "+", "-", ".", ";", "^"];// 13 items
         const letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         const numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        securePwdInputEl = document.getElementById("securePwdInput");
 
         // get user's confirmation
         //function getUserConfirmation() {
@@ -84,12 +79,13 @@
         // validate and return user's input for password length
         function getUserPwdLen() {
             let pwdLength = prompt("Choose your password length between 8 and 16 characters:");
-            console.log("Pwd lenght: ", pwdLength);
+            console.log("Pwd lenght: ", pwdLength, Number.isInteger(parseInt(pwdLength)));
+            // if user clicks cancel
+            if (pwdLength === null) { return null }
 
-
-            while (Number.isInteger(parseFloat(pwdLength)) === false) {
+            while (Number.isInteger(parseInt(pwdLength)) === false) {
                 pwdLength = prompt("Please input your password length in a NUMBER FORMAT between 8-16:");
-                console.log(pwdLength, " ", Number.isInteger(pwdLength));
+                console.log(pwdLength, " ", Number.isInteger(parseInt(pwdLength)));
                 // if user clicks Cancel button, exit the while loop
                 if (pwdLength === null) { break; }
             }
@@ -119,9 +115,14 @@
 
 
         // }
-        function genSecurePwd(pwdLen) {
+        function genSecurePwd() {
+
+            const pwdLen = getUserPwdLen();
+            // if user click cancel
+            if (pwdLen === null) {return}
             let securePwdArr = randomizeLowerCaseArr(pwdLen);;
-            // get userConfirmation
+
+            // get userConfirmation for password criteria
             const capCharBool = confirm("Do you want capital characters?");
             const specialCharBool = confirm("Do you want special character?");
             const numCharBool = confirm("Do you want numeric characters?");
@@ -136,7 +137,7 @@
             if (specialCharBool === true) {
                 specialChar = specialChars[randomizeArrayIndex(12)];
                 //splice special char at random index from 3 to 5 
-                securePwdArr.splice(randomizeArrayIndex(3) + 3, 1, specialChar);
+                securePwdArr.splice(3 + randomizeArrayIndex(3), 1, specialChar);
             }
             if (numCharBool === true) {
                 numChar = numbers[randomizeArrayIndex(9)];
@@ -144,14 +145,28 @@
                 securePwdArr.splice(6 + randomizeArrayIndex(securePwdArr.length - 6), 1, numChar);
             }
 
-            for (let i = 0; i < pwdLen; i++){
+            for (let i = 0; i < pwdLen; i++) {
                 strSecurePwd = strSecurePwd + securePwdArr[i];
             }
-            return strSecurePwd;
+            securePwdInputEl.value = strSecurePwd;
         }
 
-        
-        console.log(genSecurePwd(getUserPwdLen()));
+        // copy the secure password to clip board
+
+
+        function copyToClipboard() {
+
+            // var copyText = securePwdInputEl;
+            securePwdInputEl.disabled = false;
+            securePwdInputEl.select();
+            securePwdInputEl.setSelectionRange(0, 99999)
+            document.execCommand("copy");
+            alert("Copied the text: " + securePwdInputEl.value);
+            securePwdInputEl.disabled = true;
+        }
+
+
+
 
 
 
